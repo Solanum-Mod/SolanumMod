@@ -2,6 +2,7 @@
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
+using SolanumMod.Items.Materials;
 
 namespace SolanumMod.Items.Armor.ShadowstormSet
 {
@@ -43,5 +44,13 @@ namespace SolanumMod.Items.Armor.ShadowstormSet
             player.magicDamage += 0.07f;
         }
 
+        public override void AddRecipes()
+        {
+            ModRecipe modRecipe = new ModRecipe(mod);
+            modRecipe.AddIngredient(ItemType<ShadowstormCloth>(), 6);
+            modRecipe.AddTile(16); //Anvil
+            modRecipe.SetResult(this, 1);
+            modRecipe.AddRecipe();
+        }
     }
 }
