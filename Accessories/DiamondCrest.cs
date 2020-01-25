@@ -17,7 +17,7 @@ namespace SolanumMod.Accessories
 		{
 			item.width = 24;
 			item.height = 24;
-			item.value = (float)Item.buyPrice(0, 0, 75, 0);
+			item.value = Item.buyPrice(0, 0, 75, 0);
 			base.item.rare = 3;
 			base.item.accessory = true;
 		}
