@@ -11,7 +11,7 @@ namespace SolanumMod
 	{
 		public SolanumMod()
 		{
-			Archeon.instance = this;
+			SolanumMod.instance = this;
 			ModProperties properties = default(ModProperties);
 			properties.Autoload = true;
 			properties.AutoloadGores = true;
