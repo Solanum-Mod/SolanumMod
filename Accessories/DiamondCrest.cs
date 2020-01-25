@@ -27,7 +27,7 @@ namespace SolanumMod.Accessories
 			ModRecipe modRecipe = new ModRecipe(mod);
 			modRecipe.AddIngredient(ItemID.Diamond, 10);
 			modRecipe.AddIngredient(ItemID.FallenStar, 5);
-			modRecipe.AddRecipeGroup("GoldOrPlatinumBar", 3);
+			modRecipe.AddRecipeGroup("GoldPlatinumBar", 3);
 			modRecipe.AddTile(16); //Anvil
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
