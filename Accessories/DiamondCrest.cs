@@ -25,8 +25,9 @@ namespace SolanumMod.Accessories
 		public override void AddRecipes()
 		{
 			ModRecipe modRecipe = new ModRecipe(mod);
-			modRecipe.AddIngredient(ItemID.Diamond, 5);
-			modRecipe.AddIngredient(ItemID.Bone, 25);
+			modRecipe.AddIngredient(ItemID.Diamond, 10);
+			modRecipe.AddIngredient(ItemID.FallenStar, 5);
+			modRecipe.AddRecipeGroup("GoldOrPlatinumBar", 3);
 			modRecipe.AddTile(16); //Anvil
 			modRecipe.SetResult(this, 1);
 			modRecipe.AddRecipe();
