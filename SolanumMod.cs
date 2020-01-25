@@ -11,7 +11,6 @@ namespace SolanumMod
 	{
 		public SolanumMod()
 		{
-			SolanumMod.instance = this;
 			ModProperties properties = default(ModProperties);
 			properties.Autoload = true;
 			properties.AutoloadGores = true;
