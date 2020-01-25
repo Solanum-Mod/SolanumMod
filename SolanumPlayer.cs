@@ -8,9 +8,14 @@ using static Terraria.ModLoader.ModContent;
 
 
 namespace SolanumMod
-{
+{ 
     class SolanumPlayer : ModPlayer
     {
-
+        public bool shadowflameMinion;
+        
+        public override void ResetEffects()
+		{
+            this.shadowflameMinion = false;
+        }
     }
 }
