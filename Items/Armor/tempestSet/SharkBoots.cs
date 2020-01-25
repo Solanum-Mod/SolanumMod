@@ -10,7 +10,7 @@ namespace SolanumMod.Items.Armor.tempestSet
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Shadow Tempest boots");
-            Tooltip.SetDefault("Increases magic damage by 10% \nIncreases move speed by 9%");
+            Tooltip.SetDefault("Increases magic damage by 10%. \nIncreases move speed by 9%.");
         }
         public override void SetDefaults()
         {

@@ -7,14 +7,14 @@ using static Terraria.ModLoader.ModContent;
 namespace SolanumMod.Items.Armor.tempestSet
 {
     [AutoloadEquip(EquipType.Head)]
-    class SharkHoodie : ModItem
+    class ShadowTempestMask : ModItem
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Shadow Tempest Hood");
-            Tooltip.SetDefault("Set Bonus: Gives the Shark Eye Buff. \nmagic damage increased by 15%. \nmagic Crit chance by 10%.");
+            DisplayName.SetDefault("Shadow Tempest Mask");
+            Tooltip.SetDefault("Set Bonus: Gives the Shark Eye Buff. \nSummon damage increased by 15%. \n+1 Max summon.");
         }
-
+        private bool isInWater;
         int HammerTime = 5 * 60;
         public override void SetDefaults()
         {
@@ -34,11 +34,11 @@ namespace SolanumMod.Items.Armor.tempestSet
         {
             if (Collision.DrownCollision(player.position, player.width, player.height, player.gravDir))
             {
-                
+
                 player.AddBuff(mod.BuffType("SharkEyeBuff"), HammerTime, false);
             }
-            player.magicCrit += 1;
-            player.magicDamage += 0.15f;
+            player.minionDamage += 0.15f;
+            player.maxMinions += 1;
         }
 
     }
