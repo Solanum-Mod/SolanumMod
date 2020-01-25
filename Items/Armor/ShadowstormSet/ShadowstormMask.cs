@@ -20,7 +20,7 @@ namespace SolanumMod.Items.Armor.ShadowstormSet
             item.height = 18;
             item.value = 10000;
             item.rare = 3;
-            item.defense = 30;
+            item.defense = 9;
 
         }
         public override bool IsArmorSet(Item head, Item body, Item legs)

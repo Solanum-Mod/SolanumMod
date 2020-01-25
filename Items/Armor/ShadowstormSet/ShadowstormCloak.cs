@@ -20,7 +20,7 @@ namespace SolanumMod.Items.Armor.ShadowstormSet
             item.height = 28;
             item.value = 10000;
             item.rare = 3;
-            item.defense = 30;
+            item.defense = 13;
 
         }
         public override void UpdateEquip(Player player)
