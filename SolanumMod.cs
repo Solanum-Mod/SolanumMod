@@ -26,7 +26,7 @@ namespace SolanumMod
 				19,
 				706
 			});
-			RecipeGroup.RegisterGroup("GoldOrPlatinumBar", recipeGroup);
+			RecipeGroup.RegisterGroup("GoldPlatinumBar", recipeGroup);
 		}
 	}
 }
