@@ -6,7 +6,7 @@ using Terraria.ModLoader;
 
 namespace SolanumMod.Projectiles
 {
-	public class LiquidHealingOrb : ModProjectile
+	public class AquaticPerilHealingOrb : ModProjectile
 	{
 		public override void SetStaticDefaults()
 		{
