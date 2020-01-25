@@ -4,13 +4,13 @@ using Terraria;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
 
-namespace Archeon.Accessories
+namespace SolanumMod.Accessories
 {
-	public class LiquidHealer : ModItem
+	public class AquaticPeril : ModItem
 	{
 		public override void SetStaticDefaults()
 		{
-			base.DisplayName.SetDefault("Liquid Healer"); //Idk what the name could be
+			base.DisplayName.SetDefault("Aquatic Peril"); 
 			base.Tooltip.SetDefault("Spawns healing orbs while submerged in water");
 		}
 
