@@ -16,8 +16,8 @@ namespace SolanumMod.Accessories
 
 		public override void SetDefaults()
 		{
-			base.item.width = 12;
-			base.item.height = 16;
+			base.item.width = 30;
+			base.item.height = 56;
 			item.value = Item.buyPrice(0, 4, 20, 0); //No idea how far into the game the item will be made, buy price is random
 			base.item.rare = 6;
 			base.item.accessory = true;
@@ -32,7 +32,7 @@ namespace SolanumMod.Accessories
 					int numxd = 0;
 					for (int i = 0; i < 800; i++)
 					{
-						if (Main.projectile[i].active && Main.projectile[i].owner == player.whoAmI && Main.projectile[i].type == base.mod.ProjectileType("LiquidHealingOrb"))
+						if (Main.projectile[i].active && Main.projectile[i].owner == player.whoAmI && Main.projectile[i].type == base.mod.ProjectileType("AquaticPerilHealingOrb"))
 						{
 							numxd++;
 						}
@@ -70,7 +70,7 @@ namespace SolanumMod.Accessories
 									{
 										for (int k = 0; k < 800; k++)
 										{
-											if (Main.projectile[k].active && Main.projectile[k].owner == player.whoAmI && Main.projectile[k].type == base.mod.ProjectileType("LiquidHealingOrb") && (center - Main.projectile[k].Center).Length() < 42f)
+											if (Main.projectile[k].active && Main.projectile[k].owner == player.whoAmI && Main.projectile[k].type == base.mod.ProjectileType("AquaticPerilHealingOrb") && (center - Main.projectile[k].Center).Length() < 42f)
 											{
 												status = false;
 												break;
@@ -78,7 +78,7 @@ namespace SolanumMod.Accessories
 										}
 										if (status && Main.myPlayer == player.whoAmI) //Spawn orb, makes this whole thing start again.
 										{
-											Projectile.NewProjectile(center.X, center.Y, 0f, 0f, base.mod.ProjectileType("LiquidHealingOrb"), 1, 0f, player.whoAmI, 0f, 0f);
+											Projectile.NewProjectile(center.X, center.Y, 0f, 0f, base.mod.ProjectileType("AquaticPerilHealingOrb"), 1, 0f, player.whoAmI, 0f, 0f);
 											return;
 										}
 									}

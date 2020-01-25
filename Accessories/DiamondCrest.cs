@@ -1,6 +1,7 @@
 ﻿using System;
 using Terraria;
 using Terraria.ModLoader;
+using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
 namespace SolanumMod.Accessories
@@ -15,9 +16,8 @@ namespace SolanumMod.Accessories
 		
 		public override void SetDefaults()
 		{
-			item.width = 24;
-			item.height = 24;
-			item.value = Item.buyPrice(0, 0, 75, 0);
+			item.width = 22;
+			item.height = 22;
 			base.item.rare = 3;
 			base.item.accessory = true;
 		}
