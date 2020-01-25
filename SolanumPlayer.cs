@@ -14,7 +14,7 @@ namespace SolanumMod
         public bool shadowflameMinion;
         
         public override void ResetEffects()
-		{
+	{
             this.shadowflameMinion = false;
         }
     }
