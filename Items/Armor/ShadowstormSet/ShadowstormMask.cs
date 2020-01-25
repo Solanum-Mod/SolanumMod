@@ -6,18 +6,18 @@ using static Terraria.ModLoader.ModContent;
 namespace SolanumMod.Items.Armor.ShadowstormSet
 {
     [AutoloadEquip(EquipType.Head)]
-    class ShadowstormHood : ModItem
+    class ShadowstormMask : ModItem
     {
         public override void SetStaticDefaults()
         {
-            //DisplayName.SetDefault("Shadowstorm Hood");
-            Tooltip.SetDefault("Set Bonus: Magic crit +10% while having the manasickness debuff, magic damage +10%, move speed +5%. \nmagic damage increased by 7%.");
+            //DisplayName.SetDefault("Shadowstorm Mask");
+            Tooltip.SetDefault("Set Bonus: Minions inflict the shadowflame debuff, summon damage +10%, move speed +5%. \nSummon damage increased by 10%. \nMax minions +1");
         }
 
         public override void SetDefaults()
         {
-            item.width = 22;
-            item.height = 26;
+            item.width = 20;
+            item.height = 18;
             item.value = 10000;
             item.rare = 3;
             item.defense = 30;
@@ -30,18 +30,15 @@ namespace SolanumMod.Items.Armor.ShadowstormSet
 
         public override void UpdateArmorSet(Player player)
         {
-            if (Main.LocalPlayer.HasBuff(BuffID.ManaSickness)) {
+            player.GetModPlayer<SolanumPlayer>().shadowflameMinion = true;
 
-                player.magicCrit += 1;
-            }
-                
-            player.magicDamage += 0.10f;
+            player.minionDamage += 0.10f;
             player.moveSpeed += 0.05f;
         }
+
         public override void UpdateEquip(Player player)
         {
-            player.magicDamage += 0.07f;
+            player.maxMinions += 1;
         }
-
     }
 }

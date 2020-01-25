@@ -18,13 +18,13 @@ namespace SolanumMod.Items.Armor.tempestSet
             item.height = 16;
             item.value = 10000;
             item.rare = 2;
-            item.defense = 45;
+            item.defense = 11;
         }
 
         public override void UpdateEquip(Player player)
         {
 
-            player.moveSpeed *= 0.9f;
+            player.moveSpeed += 0.09f;
             player.magicDamage += 0.1f;
         }
     }

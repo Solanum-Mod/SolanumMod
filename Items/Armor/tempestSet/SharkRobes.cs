@@ -19,7 +19,7 @@ namespace SolanumMod.Items.Armor.tempestSet
             item.height = 32;
             item.value = 10000;
             item.rare = 2;
-            item.defense = 60;
+            item.defense = 16;
         }
         public override void UpdateEquip(Player player)
         {

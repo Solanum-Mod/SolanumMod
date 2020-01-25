@@ -10,7 +10,7 @@ namespace SolanumMod.Items.Armor.tempestSet
         public override void SetDefaults()
         {
             DisplayName.SetDefault("Shark Eye");
-            Description.SetDefault("Player moves faster when water is touched and provides swimming abilities.");
+            Description.SetDefault("Player moves faster when water is touched and provides swimming abilities, all damage +15%.");
             Main.debuff[Type] = true;
             Main.buffNoSave[Type] = true;
             Main.buffNoTimeDisplay[Type] = true;
@@ -20,7 +20,7 @@ namespace SolanumMod.Items.Armor.tempestSet
         {
 
             player.moveSpeed += 1.88f;
-            player.allDamage += 0.05f;
+            player.allDamage += 0.15f;
             player.accFlipper = true;
             player.ignoreWater = true;
         }

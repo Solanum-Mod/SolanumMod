@@ -22,7 +22,7 @@ namespace SolanumMod.Items.Armor.tempestSet
             item.height = 26;
             item.value = 10000;
             item.rare = 3;
-            item.defense = 30;
+            item.defense = 11;
 
         }
         public override bool IsArmorSet(Item head, Item body, Item legs)
@@ -37,9 +37,12 @@ namespace SolanumMod.Items.Armor.tempestSet
 
                 player.AddBuff(mod.BuffType("SharkEyeBuff"), HammerTime, false);
             }
+        }
+
+        public override void UpdateEquip(Player player)
+        {
             player.minionDamage += 0.15f;
             player.maxMinions += 1;
         }
-
     }
 }
