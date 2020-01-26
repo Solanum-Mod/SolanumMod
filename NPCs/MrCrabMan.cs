@@ -11,7 +11,7 @@ namespace SolanumMod.NPCs
     {
         public override void SetStaticDefaults()
         {
-            DisplayName.SetDefault("Crabby");
+            DisplayName.SetDefault("Scuttler");
             Main.npcFrameCount[npc.type] = 10;
         }
 
