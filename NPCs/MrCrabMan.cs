@@ -19,7 +19,7 @@ namespace SolanumMod.NPCs
         {
             npc.lifeMax = 50;
             npc.damage = 20;
-            npc.defense = 100;
+            npc.defense = 12;
             npc.knockBackResist = 0.3f;
             npc.width = 26;
             npc.height = 26;
