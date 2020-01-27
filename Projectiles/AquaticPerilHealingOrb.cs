@@ -40,7 +40,7 @@ namespace SolanumMod.Projectiles
 			{
 				if (base.projectile.owner == Main.myPlayer) //The things in here make the healing work, it's a bit more complex than that, but that's the best way I can explain i guess
 				{
-					int num5 = 15; // This is the amount that the orb heals for. You can do Main.rand.Next(number, biggernumber) if you want randomized healing
+					int num5 = Main.rand.Next(5, 7); // This is the amount that the orb heals for. You can do Main.rand.Next(number, biggernumber) if you want randomized healing
 					Main.player[num].HealEffect(num5, false);
 					Main.player[num].statLife += num5;
 					if (Main.player[num].statLife > Main.player[num].statLifeMax2)
