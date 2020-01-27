@@ -27,7 +27,7 @@ namespace SolanumMod.Accessories
 		{
 			if (player.wet) //if you want the orbs to spawn ONLY if the player is fully submerged, then change if(player.wet) to if (Collision.DrownCollision(player.position, player.width, player.height, player.gravDir))
 			{
-				if (Main.rand.Next(25) == 0) //Change this if you want to change how regularly the orbs spawn?
+				if (Main.rand.Next(50) == 0) //Change this if you want to change how regularly the orbs spawn?
 				{
 					int numxd = 0;
 					for (int i = 0; i < 800; i++)
@@ -37,7 +37,7 @@ namespace SolanumMod.Accessories
 							numxd++;
 						}
 					}
-					if (Main.rand.Next(20) >= numxd && numxd < 15) 
+					if (Main.rand.Next(30) >= numxd && numxd < 10) 
 					{
 						int numxd2 = 90; 
 						int numxd3 = 45; //This I don't really know if you should change, friend helped with some of the nums and he said these numbers were prolly the best. 
