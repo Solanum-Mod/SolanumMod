@@ -27,6 +27,7 @@ namespace SolanumMod.Items.Weapons
 			item.autoReuse = true;
 			item.shoot = mod.ProjectileType("PearlStaffOrb");
 			item.shootSpeed = 14f;
+                        item.noMelee = true;
 		}
 	}
 }
