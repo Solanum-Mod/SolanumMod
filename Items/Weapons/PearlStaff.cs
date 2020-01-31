@@ -7,7 +7,7 @@ namespace SolanumMod.Items.Weapons
 	{
 		public override void SetStaticDefaults() 
 		{
-			Tooltip.SetDefault("Casts an orb which explodes into shards");
+			Tooltip.SetDefault("Casts a pearl which explodes into shards");
 		}
 
 		public override void SetDefaults() 
@@ -21,8 +21,8 @@ namespace SolanumMod.Items.Weapons
 			item.useAnimation = 20;
 			item.useStyle = 5;
 			item.knockBack = 2.4f;
-			item.value = 22000;
-			item.rare = 6;
+			item.value = 25000;
+			item.rare = 4;
 			item.UseSound = SoundID.Item21;
 			item.autoReuse = true;
 			item.shoot = mod.ProjectileType("PearlStaffOrb");
