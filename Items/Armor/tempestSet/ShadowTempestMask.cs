@@ -1,4 +1,4 @@
-﻿using Terraria;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -12,7 +12,7 @@ namespace SolanumMod.Items.Armor.tempestSet
         public override void SetStaticDefaults()
         {
             DisplayName.SetDefault("Shadow Tempest Mask");
-            Tooltip.SetDefault("Set Bonus: Gives the Shark Eye Buff. \nSummon damage increased by 15%. \n+1 Max summon.");
+            Tooltip.SetDefault("Increases summon damage by 15% and max amount of minions by 1");
         }
         private bool isInWater;
         int HammerTime = 5 * 60;
@@ -32,6 +32,8 @@ namespace SolanumMod.Items.Armor.tempestSet
 
         public override void UpdateArmorSet(Player player)
         {
+			player.setBonus = "Gives the Shark Eye buff when submerged in water";
+			
             if (Collision.DrownCollision(player.position, player.width, player.height, player.gravDir))
             {
 
