@@ -1,4 +1,4 @@
-﻿using Terraria;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -11,8 +11,8 @@ namespace SolanumMod.Items.Armor.ShadowstormSet
     {
         public override void SetStaticDefaults()
         {
-            //DisplayName.SetDefault("Shadowstorm Hood");
-            Tooltip.SetDefault("Set Bonus: Magic crit +10% while having the manasickness debuff, magic damage +10%, move speed +5%. \nmagic damage increased by 7%.");
+            DisplayName.SetDefault("Shadowstorm Hood");
+            Tooltip.SetDefault("Increases magic damage by 7%");
         }
 
         public override void SetDefaults()
@@ -31,11 +31,13 @@ namespace SolanumMod.Items.Armor.ShadowstormSet
 
         public override void UpdateArmorSet(Player player)
         {
+			player.setBonus = "Increases magic critical hit chance by 10% while having the Mana Sickness debuff \nIncreases magic damage by 10% and movement speed by 5%";
+			
             if (Main.LocalPlayer.HasBuff(BuffID.ManaSickness)) {
 
-                player.magicCrit += 1;
+                player.magicCrit += 10;
             }
-                
+            
             player.magicDamage += 0.10f;
             player.moveSpeed += 0.05f;
         }
