@@ -1,4 +1,4 @@
-﻿using Terraria;
+using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using static Terraria.ModLoader.ModContent;
@@ -11,8 +11,8 @@ namespace SolanumMod.Items.Armor.ShadowstormSet
     {
         public override void SetStaticDefaults()
         {
-            //DisplayName.SetDefault("Shadowstorm Mask");
-            Tooltip.SetDefault("Set Bonus: Minions inflict the shadowflame debuff, summon damage +10%, move speed +5%. \nSummon damage increased by 10%. \nMax minions +1");
+            DisplayName.SetDefault("Shadowstorm Mask");
+            Tooltip.SetDefault("Increases max amount of minions by 1");
         }
 
         public override void SetDefaults()
@@ -31,6 +31,8 @@ namespace SolanumMod.Items.Armor.ShadowstormSet
 
         public override void UpdateArmorSet(Player player)
         {
+			player.setBonus = "Minions inflict ShadowFlame onto enemies \nIncreases minion damage by 10% and movement speed by 5%";
+			
             player.GetModPlayer<SolanumPlayer>().shadowflameMinion = true;
 
             player.minionDamage += 0.10f;
