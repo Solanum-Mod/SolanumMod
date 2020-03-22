@@ -1,2 +1,2 @@
 # SolanumMod
-Solanum Mod is a Terraria content mod in development
+Why are you even reading this
