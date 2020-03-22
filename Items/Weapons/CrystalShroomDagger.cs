@@ -32,12 +32,13 @@ namespace SolanumMod.Items.Weapons
 			item.useStyle = 3;
 		}
 
-		public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
-		{
+        public override void OnHitNPC(Player player, NPC target, int damage, float knockback, bool crit)
+        {
+            float wantedVelocity = 7f;
+            Vector2 unit = Vector2.UnitX * wantedVelocity;
 
-
-
-
-		}	
-	}
+            for (int i = 0; i < 3; i++)
+                Projectile.NewProjectile(target.position, unit.RotatedByRandom(MathHelper.Pi), mod.ProjectileType("CrystalDaggerP"), damage, knockback, player.whoAmI);
+        }
+    }
 }
