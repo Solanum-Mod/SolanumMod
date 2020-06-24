@@ -30,28 +30,36 @@ namespace SolanumMod.NPCs
         int frameTimer = 0;
         float speed = 0.1f;
         bool shouldMakeDust;
+        bool IsPlayerLooking2;
+        bool LookTimer = 0;
         public override void AI()
         {
+        IsPlayerLooking2 = false;
             npc.TargetClosest(true);
             Player player = Main.player[npc.target];
-            bool IsPlayerLooking = player.direction == -1 && npc.position.X < player.position.X || player.direction == 1 && npc.position.X > player.position.X;
+            if(!IsPlayerLooking2)
+                bool IsPlayerLooking = player.direction == -1 && npc.position.X < player.position.X || player.direction == 1 && npc.position.X > player.position.X;
             if(!player.active || player.dead)
             {
                 npc.TargetClosest(true);
             }
             if(IsPlayerLooking)
             { 
-                npc.defense = 42;
+                LookTimer++;
+                if(LookTimer < 300)
+                {
+                npc.defense = 30;
                 shouldMakeDust = true;
                 npc.velocity.X = 0;
                 npc.velocity.Y = 1;
                 npc.spriteDirection = -player.direction;
+                } else {IsPlayerLooking = false; IsPlayerLooking2 = true;
             } else
             {
                 if(shouldMakeDust)
                 {
                     shouldMakeDust = false;
-                    Dust.NewDust(npc.Center - new Vector2(Main.rand.Next(-2,2),Main.rand.Next(-3,3)),15,15,ModContent.DustType<GoblinToad_Dust>(),Main.rand.Next(-4,4),Main.rand.Next(-4,4));
+                    Dust.NewDust(npc.Center - new Vector2(Main.rand.Next(-2,2),Main.rand.Next(-3,3)),30,30,ModContent.DustType<GoblinToad_Dust>(),Main.rand.Next(-4,4),Main.rand.Next(-4,4));
                 }
                 if(npc.velocity.X > 4.2f)
                 {
@@ -92,7 +100,8 @@ namespace SolanumMod.NPCs
         {
             frameTimer++;
             Player player = Main.player[npc.target];
-            bool IsPlayerLooking = player.direction == -1 && npc.position.X < player.position.X || player.direction == 1 && npc.position.X > player.position.X;
+            if(!IsPlayerLooking2)
+                bool IsPlayerLooking = player.direction == -1 && npc.position.X < player.position.X || player.direction == 1 && npc.position.X > player.position.X;
              if(!IsPlayerLooking)
             { 
                 
