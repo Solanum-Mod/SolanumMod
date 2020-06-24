@@ -75,7 +75,7 @@ namespace SolanumMod.NPCs
             Dust.NewDust(npc.Center,30,30,ModContent.DustType<GoblinToad_Dust>(),Main.rand.Next(-12,12),Main.rand.Next(-8,8));
             for(int i = 0;i<4;i++)
             {
-                Vector2 velocity = new Vector2(Main.rand.Next(-10,10),Main.rand.Next(-4,-10));
+                Vector2 velocity = new Vector2(Main.rand.Next(-10,10),Main.rand.Next(-10,-4));
                 Projectile.NewProjectile(npc.Center,velocity,ModContent.ProjectileType<GoblinToadIceProjectile>(),1,1);
             }
         }
