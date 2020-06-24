@@ -95,9 +95,9 @@ namespace SolanumMod.NPCs
              if(!IsPlayerLooking)
             { 
                 
-              for(int i = 0;i<60;i++)
+              for(int i = 0;i<90;i++)
               {
-                  if(i%10 == 0)
+                  if(i%18 == 0)
                   {
                       frame++;
                       if(frame == Main.npcFrameCount[npc.type])
