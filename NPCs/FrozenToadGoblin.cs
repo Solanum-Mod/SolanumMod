@@ -44,6 +44,7 @@ namespace SolanumMod.NPCs
                 npc.defense = 42;
                 shouldMakeDust = true;
                 npc.velocity.X = 0;
+                npc.velocity.Y = 1;
                 npc.spriteDirection = -player.direction;
             } else
             {
@@ -83,7 +84,7 @@ namespace SolanumMod.NPCs
         {
             if(spawnInfo.player.ZoneSnow && spawnInfo.player.ZoneRockLayerHeight)
             {
-                return Main.hardMode ? 0.4f : 0.2f;
+                return Main.hardMode ? 0.6f : 0.4f;
             }
             return 0;
         }
