@@ -21,7 +21,7 @@ namespace SolanumMod.NPCs
             npc.knockBackResist = 0.1f;
             npc.buffImmune[BuffID.Frostburn] = true;
             npc.defense = 6;
-            npc.aiStyle = -1;
+            npc.aiStyle = 26;
             npc.value = Item.buyPrice(0,0,8,0);
             npc.HitSound = SoundID.NPCHit1;
             npc.DeathSound = SoundID.NPCDeath6;
@@ -32,43 +32,39 @@ namespace SolanumMod.NPCs
         bool shouldMakeDust;
         public override void AI()
         {
-            frameTimer++;
             npc.TargetClosest(true);
             Player player = Main.player[npc.target];
-            bool IsPlayerLooking = player.direction == -1 && npc.position.X < player.position.X || player.direction == 1 && npc.position.X > player.position.X && !(npc.position.Y > player.Center.Y);
+            bool IsPlayerLooking = player.direction == -1 && npc.position.X < player.position.X || player.direction == 1 && npc.position.X > player.position.X;
             if(!player.active || player.dead)
             {
                 npc.TargetClosest(true);
             }
             if(IsPlayerLooking)
             { 
+                npc.defense = 999;
                 shouldMakeDust = true;
-                npc.velocity = Vector2.Zero;
-                speed = 0;
+                npc.velocity.X = 0;
+                npc.spriteDirection = -player.direction;
             } else
             {
-                frame = 1;
                 if(shouldMakeDust)
                 {
                     shouldMakeDust = false;
                     Dust.NewDust(npc.Center - new Vector2(Main.rand.Next(-2,2),Main.rand.Next(-3,3)),15,15,ModContent.DustType<GoblinToad_Dust>(),Main.rand.Next(-4,4),Main.rand.Next(-4,4));
                 }
-                speed += 0.5f;
-                if(speed > 20)
-                    speed = 20;
-                npc.velocity = Vector2.Normalize(player.Center - npc.Center) * new Vector2(3,1);
-                if(Vector2.Distance(player.Center,npc.Center) < 55)
+                if(npc.velocity.X > 4.2f)
+                {
+                    npc.velocity.X = 4.2f;
+                }
+                if(npc.velocity.X < -4.2f)
+                {
+                    npc.velocity.X = -4.2f;
+                }
+                if(Vector2.Distance(player.Center,npc.Center) < 60 && !IsPlayerLooking)
                 {
                     Explode();
                 }
-                 if (npc.velocity.X > 0)
-            {
-                npc.spriteDirection = -1;
-            }
-            else
-            {
-                npc.spriteDirection = 1;
-            }
+            npc.spriteDirection = npc.direction;
             }
         }
         private void Explode()
@@ -77,32 +73,41 @@ namespace SolanumMod.NPCs
             npc.active = false;
             npc.life = -1;
             Dust.NewDust(npc.Center,30,30,ModContent.DustType<GoblinToad_Dust>(),Main.rand.Next(-12,12),Main.rand.Next(-8,8));
-            for(int i = 0;i<3;i++)
+            for(int i = 0;i<4;i++)
             {
-                Vector2 velocity = new Vector2(Main.rand.Next(-10,10),Main.rand.Next(-10,10));
-                Projectile.NewProjectile(npc.Center,velocity,ModContent.ProjectileType<GoblinToadIceProjectile>(),36,1);
+                Vector2 velocity = new Vector2(Main.rand.Next(-10,10),Main.rand.Next(4,10));
+                Projectile.NewProjectile(npc.Center,velocity,ModContent.ProjectileType<GoblinToadIceProjectile>(),1,1);
             }
         }
-        public override void NPCLoot()
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            Item.NewItem(npc.position,npc.width,npc.height,ItemID.SilverCoin,Main.rand.Next(5,10));
+            if(spawnInfo.player.ZoneSnow && spawnInfo.player.ZoneRockLayerHeight)
+            {
+                return Main.hardMode ? 0.4f : 0.2f;
+            }
+            return 0;
         }
         public override void FindFrame(int frameHeight)
         {
+            frameTimer++;
             Player player = Main.player[npc.target];
-            bool IsPlayerLooking = player.direction == -1 && npc.position.X < player.position.X || player.direction == 1 && npc.position.X > player.position.X && !(npc.position.Y > player.Center.Y);
+            bool IsPlayerLooking = player.direction == -1 && npc.position.X < player.position.X || player.direction == 1 && npc.position.X > player.position.X;
              if(!IsPlayerLooking)
             { 
-                frame = 1;
-                if(frameTimer >= 8)
-                {
-                    frame++;
-                    frameTimer = 0;
-                    if(frame == Main.npcFrameCount[npc.type])
-                        frame = 1;
-                }
-                npc.frame.Y = frame * frameHeight;
-            } else frame = 0;
+                
+              for(int i = 0;i<60;i++)
+              {
+                  if(i%10 == 0)
+                  {
+                      frame++;
+                      if(frame == Main.npcFrameCount[npc.type])
+                      {
+                          frame = 1;
+                      }
+                  }
+              }
+            } else if(IsPlayerLooking) frame = 0;
+            npc.frame.Y = frame * frameHeight;
         }
     }
 }
