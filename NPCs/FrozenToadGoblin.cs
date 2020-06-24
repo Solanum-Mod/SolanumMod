@@ -41,7 +41,7 @@ namespace SolanumMod.NPCs
             }
             if(IsPlayerLooking)
             { 
-                npc.defense = 999;
+                npc.defense = 42;
                 shouldMakeDust = true;
                 npc.velocity.X = 0;
                 npc.spriteDirection = -player.direction;
@@ -60,7 +60,7 @@ namespace SolanumMod.NPCs
                 {
                     npc.velocity.X = -4.2f;
                 }
-                if(Vector2.Distance(player.Center,npc.Center) < 60 && !IsPlayerLooking)
+                if(Vector2.Distance(player.Center,npc.Center) < 60)
                 {
                     Explode();
                 }
@@ -75,7 +75,7 @@ namespace SolanumMod.NPCs
             Dust.NewDust(npc.Center,30,30,ModContent.DustType<GoblinToad_Dust>(),Main.rand.Next(-12,12),Main.rand.Next(-8,8));
             for(int i = 0;i<4;i++)
             {
-                Vector2 velocity = new Vector2(Main.rand.Next(-10,10),Main.rand.Next(4,10));
+                Vector2 velocity = new Vector2(Main.rand.Next(-10,10),Main.rand.Next(-4,-10));
                 Projectile.NewProjectile(npc.Center,velocity,ModContent.ProjectileType<GoblinToadIceProjectile>(),1,1);
             }
         }
