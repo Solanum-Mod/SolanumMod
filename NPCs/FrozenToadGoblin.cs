@@ -30,14 +30,11 @@ namespace SolanumMod.NPCs
         int frameTimer = 0;
         float speed = 0.1f;
         bool shouldMakeDust;
-        bool IsPlayerLooking2;
-        bool LookTimer = 0;
+
         public override void AI()
         {
-        IsPlayerLooking2 = false;
             npc.TargetClosest(true);
             Player player = Main.player[npc.target];
-            if(!IsPlayerLooking2)
                 bool IsPlayerLooking = player.direction == -1 && npc.position.X < player.position.X || player.direction == 1 && npc.position.X > player.position.X;
             if(!player.active || player.dead)
             {
@@ -45,15 +42,11 @@ namespace SolanumMod.NPCs
             }
             if(IsPlayerLooking)
             { 
-                LookTimer++;
-                if(LookTimer < 300)
-                {
                 npc.defense = 30;
                 shouldMakeDust = true;
                 npc.velocity.X = 0;
                 npc.velocity.Y = 1;
                 npc.spriteDirection = -player.direction;
-                } else {IsPlayerLooking = false; IsPlayerLooking2 = true;
             } else
             {
                 if(shouldMakeDust)
@@ -100,14 +93,13 @@ namespace SolanumMod.NPCs
         {
             frameTimer++;
             Player player = Main.player[npc.target];
-            if(!IsPlayerLooking2)
                 bool IsPlayerLooking = player.direction == -1 && npc.position.X < player.position.X || player.direction == 1 && npc.position.X > player.position.X;
              if(!IsPlayerLooking)
             { 
                 
               for(int i = 0;i<90;i++)
               {
-                  if(i%18 == 0)
+                  if(i%15 == 0)
                   {
                       frame++;
                       if(frame == Main.npcFrameCount[npc.type])
