@@ -28,6 +28,7 @@ namespace SolanumMod.Items.Weapons
             item.UseSound = SoundID.Item1;
             item.useAnimation = 20;
             item.autoReuse = true;
+            item.rare = 1;
         }
     }
 }
