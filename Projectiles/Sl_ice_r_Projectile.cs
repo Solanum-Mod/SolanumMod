@@ -31,7 +31,7 @@ namespace SolanumMod.Projectiles
          Player player = Main.player[projectile.owner];
          float num1 = 1.570796f;
          Vector2 vector2_1 = player.RotatedRelativePoint(player.MountedCenter, true);   
-            if (++projectile.frameCounter >= 4) {
+            if (++projectile.frameCounter >= 6) {
 				projectile.frameCounter = 0;
                 
 				if (++projectile.frame >= 10) {
@@ -80,11 +80,6 @@ namespace SolanumMod.Projectiles
         if (projectile.spriteDirection == -1)
         projectile.rotation += MathHelper.Pi; 
         }
-        public override Color? GetAlpha(Color lightColor)
-        {
-            return new Color(22,194,220,200);
-        }
-      
     }
 }
     
