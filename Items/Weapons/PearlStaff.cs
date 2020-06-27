@@ -8,6 +8,7 @@ namespace SolanumMod.Items.Weapons
 		public override void SetStaticDefaults() 
 		{
 			Tooltip.SetDefault("Casts a pearl which explodes into shards");
+			Item.staff[item.type] = true;
 		}
 
 		public override void SetDefaults() 
