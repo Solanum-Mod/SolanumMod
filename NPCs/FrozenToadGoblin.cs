@@ -45,7 +45,6 @@ namespace SolanumMod.NPCs
                 npc.defense = 30;
                 shouldMakeDust = true;
                 npc.velocity.X = 0;
-                npc.velocity.Y = 1;
                 npc.spriteDirection = -player.direction;
             } else
             {
@@ -54,6 +53,9 @@ namespace SolanumMod.NPCs
                     shouldMakeDust = false;
                     Dust.NewDust(npc.Center - new Vector2(Main.rand.Next(-2,2),Main.rand.Next(-3,3)),30,30,ModContent.DustType<GoblinToad_Dust>(),Main.rand.Next(-4,4),Main.rand.Next(-4,4));
                 }
+                bool IsWearingEye = player.GetModPlayer<SolanumPlayer>().IsWearingFrozenEye;
+            if(!IsWearingEye)
+            {
                 if(npc.velocity.X > 4.2f)
                 {
                     npc.velocity.X = 4.2f;
@@ -62,6 +64,17 @@ namespace SolanumMod.NPCs
                 {
                     npc.velocity.X = -4.2f;
                 }
+            } else 
+            {
+                if(npc.velocity.X > 2.1f)
+                {
+                    npc.velocity.X = 2.1f;
+                }
+                if(npc.velocity.X < -2.1f)
+                {
+                    npc.velocity.X = -2.1f;
+                }
+            }
                 if(Vector2.Distance(player.Center,npc.Center) < 60)
                 {
                     Explode();
@@ -81,6 +94,13 @@ namespace SolanumMod.NPCs
                 Projectile.NewProjectile(npc.Center,velocity,ModContent.ProjectileType<GoblinToadIceProjectile>(),1,1);
             }
         }
+        public override void NPCLoot()
+        {
+            if(Main.rand.Next(11) > 9)
+            {
+                Item.NewItem(npc.Center,npc.width,npc.height,ModContent.ItemType<Accessories.FrozenEye>());
+            }
+        }
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             if(spawnInfo.player.ZoneSnow && spawnInfo.player.ZoneRockLayerHeight)
@@ -93,13 +113,16 @@ namespace SolanumMod.NPCs
         {
             frameTimer++;
             Player player = Main.player[npc.target];
+            bool IsWearingEye = player.GetModPlayer<SolanumPlayer>().IsWearingFrozenEye;
                 bool IsPlayerLooking = player.direction == -1 && npc.position.X < player.position.X || player.direction == 1 && npc.position.X > player.position.X;
              if(!IsPlayerLooking)
             { 
+                int Num1 = IsWearingEye ? 180 : 150;
+                int Num2 = IsWearingEye ? 30 : 25;
                 
-              for(int i = 0;i<90;i++)
+              for(int i = 0;i<Num1;i++)
               {
-                  if(i%15 == 0)
+                  if(i%Num2 == 0)
                   {
                       frame++;
                       if(frame == Main.npcFrameCount[npc.type])
