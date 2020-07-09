@@ -4,9 +4,14 @@ using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
 using SolanumMod.NPCs.Boss.Nepturian.Projs;
+using System.Linq;
 
 namespace SolanumMod.NPCs.Boss.Nepturian
 {
+    /* To: whoever is reading.
+     * This code was rushed in a day and is kinda shit.
+     * -Daim
+     */ 
     public class Nepturian : ModNPC
     {
         public override void SetStaticDefaults()
@@ -42,6 +47,7 @@ namespace SolanumMod.NPCs.Boss.Nepturian
         private const int State_Choosing = 4;
         private const int State_Dive = 5;
         private const int State_Clone = 6;
+        private const int State_Presentation = 7;
 
         // A good coder would only use one Timer
         private int StateTimer;
@@ -144,27 +150,97 @@ namespace SolanumMod.NPCs.Boss.Nepturian
             Timer++;
             if(Timer == 1)
             {
-                State = State_Choosing;
+                State = State_Presentation;
                 Timer = 2;
             }
+            if(State == State_Presentation)
+            {
+                npc.velocity = Vector2.Zero;
+                StateTimer++;
+                if(StateTimer == 1)
+                {
+                    SolanumMod.NepturianCinematics = true;
+                }
+                else if(StateTimer > 1 && StateTimer <= 300)
+                {
+                    npc.alpha = 255;
+                    BubTimer++;
+                    if(BubTimer == 3)
+                    {
+                        ChooseBubble(0);
+                        BubTimer = 0;
+                    }
+                    SolanumMod.ShakeScreen(1.5f, 1);
+                    npc.velocity = Vector2.Zero;
+                    Vector2 dustPosition = npc.Center + new Vector2(Main.rand.Next(-60, 60), Main.rand.Next(-60, 60));
+                    Dust dust = Dust.NewDustPerfect(dustPosition, 23, null, 100, Color.Aquamarine, 0.8f);
+                    dust.velocity *= 0.3f;
+                    dust.noGravity = true;
 
-            if (State == State_Choosing)
+                    Vector2 vel = Vector2.One.RotatedByRandom(6.28f);
+                    Dust dust2 = Dust.NewDustPerfect(npc.Center + vel * 60, DustID.Vortex, vel * -1, 100, Color.Aqua, 1);
+                    dust2.noGravity = true;
+
+                    Dust dust3 = Dust.NewDustPerfect(npc.Center + vel * 35, DustID.Vortex, vel * -1, 100, Color.Aqua, 1);
+                    dust3.noGravity = true;
+                }
+                else if(StateTimer > 300 && StateTimer <= 600)
+                {
+                    npc.alpha -= 7;
+                }
+                else if(StateTimer == 601)
+                {
+                    SolanumMod.NepturianCinematics = false;
+                    StateTimer = 0;
+                    State = State_Choosing;
+                }
+            }
+            else if (State == State_Choosing)
             {
                 StateTimer++;
                 if (StateTimer == 130)
                 {
-                    int i = Main.rand.Next(3);
-                    switch (i)
+                    if (npc.life >= npc.lifeMax / 2)
                     {
-                        case 0:
-                            State = State_Dash;
-                            break;
-                        case 1:
-                            State = State_Leviathan;
-                            break;
-                        case 2:
-                            State = State_Clone;
-                            break;
+                        int i = Main.rand.Next(3);
+                        switch (i)
+                        {
+                            case 0:
+                                State = State_Dash;
+                                break;
+                            case 1:
+                                State = State_Choosing;
+                                break;
+                            case 2:
+                                State = State_Stream;
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        // second half
+                        int i = Main.rand.Next(6);
+                        switch (i)
+                        {
+                            case 0:
+                                State = State_Dash;
+                                break;
+                            case 1:
+                                State = State_Choosing;
+                                break;
+                            case 2:
+                                State = State_Stream;
+                                break;
+                            case 3:
+                                State = State_Leviathan;
+                                break;
+                            case 4:
+                                State = State_Rain;
+                                break;
+                            case 5:
+                                State = State_Clone;
+                                break;
+                        }
                     }
                     StateTimer = 0;
                 }
@@ -185,7 +261,7 @@ namespace SolanumMod.NPCs.Boss.Nepturian
                     BubTimer++;
                     if(BubTimer >= 4)
                     {
-                        ChooseBubble();
+                        ChooseBubbleHoming(20);
                         for (int i = 0; i < 36; i++)
                         {
                             float angle = MathHelper.ToRadians(10 * i);
@@ -209,9 +285,8 @@ namespace SolanumMod.NPCs.Boss.Nepturian
                 StateTimer++;
                 if (StateTimer <= 200)
                 {
+                    SolanumMod.ShakeScreen(1.5f, 1);
                     npc.velocity = Vector2.Zero;
-                    // TODO cool channel animation or something visual.
-                    // These are all decent looking dusts but it needs something cooler
                     Vector2 dustPosition = npc.Center + new Vector2(Main.rand.Next(-60, 60), Main.rand.Next(-60, 60));
                     Dust dust = Dust.NewDustPerfect(dustPosition, 23, null, 100, Color.Aquamarine, 0.8f);
                     dust.velocity *= 0.3f;
@@ -229,12 +304,13 @@ namespace SolanumMod.NPCs.Boss.Nepturian
                         if(BubTimer == 14)
                         {
                             BubTimer = 0;
-                            ChooseBubble();
+                            ChooseBubble(20);
                         }
                     }
                 }
                 else if (StateTimer == 201)
                 {
+                    SolanumMod.ShakeScreen(10f, 20);
                     // Shoot thingy
                     Projectile.NewProjectile(npc.Center, npc.velocity, ModContent.ProjectileType<LeviHead>(), 200, 2f, Main.myPlayer);
                     StateTimer = 0;
@@ -246,23 +322,11 @@ namespace SolanumMod.NPCs.Boss.Nepturian
             else if (State == State_Rain)
             {
                 // TODO: Shoots a large stream of water into the sky, making water projectiles rain from above
-            }
-            else if (State == State_Stream)
-            {
-                // TODO: Shoots several consecutive water streams at the player 
-            }
-            else if(State == State_Dive)
-            {
-                // TODO: Dives into the ground and creates several spikes of water under the character
-            }
-            else if(State == State_Clone)
-            {
                 StateTimer++;
                 if(StateTimer <= 200)
                 {
+                    SolanumMod.ShakeScreen(1.5f, 1);
                     npc.velocity = Vector2.Zero;
-                    // TODO cool channel animation or something visual.
-                    // These are all decent looking dusts but it needs something cooler
                     Vector2 dustPosition = npc.Center + new Vector2(Main.rand.Next(-60, 60), Main.rand.Next(-60, 60));
                     Dust dust = Dust.NewDustPerfect(dustPosition, 23, null, 100, Color.Aquamarine, 0.8f);
                     dust.velocity *= 0.3f;
@@ -274,13 +338,77 @@ namespace SolanumMod.NPCs.Boss.Nepturian
 
                     Dust dust3 = Dust.NewDustPerfect(npc.Center + vel * 35, DustID.Vortex, vel * -1, 100, Color.Aqua, 1);
                     dust3.noGravity = true;
+
+                    // TODO Shoot Large water projectile to the sky.
                 }
-                else if(StateTimer == 201)
+                else if (StateTimer > 200 && StateTimer <= 700)
                 {
-                    NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<NepturianClone>());
+                    BubTimer++;
+                    if(BubTimer == 2)
+                    {
+                        BubTimer = 0;
+                        Vector2 spawnPos = new Vector2(player.Center.X + Main.rand.Next(-Main.screenWidth, Main.screenWidth), player.Center.Y - 500); ;
+                        Projectile.NewProjectile(spawnPos, Vector2.Zero, ModContent.ProjectileType<RainDroplet>(), 5, 2f, Main.myPlayer);
+                    }
+                }
+                else if(StateTimer == 701)
+                {
+                    StateTimer = 0;
+                    BubTimer = 0;
+                    State = State_Choosing;
+                }
+            }
+            else if (State == State_Stream)
+            {
+                // TODO: Shoots several consecutive water streams at the player 
+                StateTimer++;
+                if(StateTimer == 320)
+                {
                     State = State_Choosing;
                     StateTimer = 0;
+                    BubTimer = 0;
                 }
+                BubTimer++;
+                if(BubTimer == 10)
+                {
+                    BubTimer = 0;
+                    Projectile.NewProjectile(npc.Center, npc.velocity, ModContent.ProjectileType<WaterStream>(), 15, 2f, Main.myPlayer);
+                }
+            }
+            else if(State == State_Dive)
+            {
+                // TODO: Dives into the ground and creates several spikes of water under the character
+            }
+            else if(State == State_Clone)
+            {
+                if (GetCloneCount() <= 3)
+                {
+                    StateTimer++;
+                    if (StateTimer <= 200)
+                    {
+                        SolanumMod.ShakeScreen(1.5f, 1);
+                        npc.velocity = Vector2.Zero;
+                        Vector2 dustPosition = npc.Center + new Vector2(Main.rand.Next(-60, 60), Main.rand.Next(-60, 60));
+                        Dust dust = Dust.NewDustPerfect(dustPosition, 23, null, 100, Color.Aquamarine, 0.8f);
+                        dust.velocity *= 0.3f;
+                        dust.noGravity = true;
+
+                        Vector2 vel = Vector2.One.RotatedByRandom(6.28f);
+                        Dust dust2 = Dust.NewDustPerfect(npc.Center + vel * 60, DustID.Vortex, vel * -1, 100, Color.Aqua, 1);
+                        dust2.noGravity = true;
+
+                        Dust dust3 = Dust.NewDustPerfect(npc.Center + vel * 35, DustID.Vortex, vel * -1, 100, Color.Aqua, 1);
+                        dust3.noGravity = true;
+                    }
+                    else if (StateTimer == 201)
+                    {
+                        SolanumMod.ShakeScreen(10f, 20);
+                        NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<NepturianClone>());
+                        State = State_Choosing;
+                        StateTimer = 0;
+                    }
+                }
+                else State = State_Choosing;
             }
         }
         private int FrameThingy = 1;
@@ -323,10 +451,6 @@ namespace SolanumMod.NPCs.Boss.Nepturian
                     FrameThingy = 1;
                 }
             }
-            else if(State == State_Rain)
-            {
-
-            }
             else
             {
                 npc.frameCounter++;
@@ -343,14 +467,35 @@ namespace SolanumMod.NPCs.Boss.Nepturian
         }
         // Chooses a random bubble, rn there are only 2 so its just an if else
         // TODO: Make a switch if more bubbles get added
-        public void ChooseBubble()
+        public void ChooseBubble(int damage)
         {
             int choice = Main.rand.Next(2);
             Projectile.NewProjectile(new Vector2(npc.Center.X + Main.rand.Next(-50, 50), npc.Center.Y + Main.rand.Next(-50, 50)),
                 new Vector2(npc.velocity.X + Main.rand.Next(5, 10), npc.velocity.Y + Main.rand.Next(5, 10)),
-                choice == 0 ? ModContent.ProjectileType<Bubble1>() : ModContent.ProjectileType<Bubble2>(), 20, 2f, Main.myPlayer);
+                choice == 0 ? ModContent.ProjectileType<Bubble1>() : ModContent.ProjectileType<Bubble2>(), damage, 2f, Main.myPlayer);
 
         }
+        public void ChooseBubbleHoming(int damage)
+        {
+            int choice = Main.rand.Next(2);
+            Projectile.NewProjectile(new Vector2(npc.Center.X + Main.rand.Next(-50, 50), npc.Center.Y + Main.rand.Next(-50, 50)),
+                new Vector2(npc.velocity.X + Main.rand.Next(5, 10), npc.velocity.Y + Main.rand.Next(5, 10)),
+                choice == 0 ? ModContent.ProjectileType<BubbleHoming>() : ModContent.ProjectileType<BubbleHoming2>(), damage, 2f, Main.myPlayer);
+
+        }
+        public int GetCloneCount()
+        {
+            int Count = 0;
+            foreach(NPC yes in Main.npc)
+            {
+                if(yes.type == ModContent.NPCType<NepturianClone>() && yes.active)
+                {
+                    Count++;
+                }
+            }
+            return Count;
+        }
+
         // Imagine nested classes, kinda cring if you ask me 
         class NepturianClone : ModNPC
         {
@@ -471,15 +616,15 @@ namespace SolanumMod.NPCs.Boss.Nepturian
                     // TODO: Shoot projectile lol
                     AttackTimer = 0;
                     if (Main.rand.NextBool())
-                        ChooseBubble();
+                        ChooseBubbleHoming();
                 }
             }
-            public void ChooseBubble()
+            public void ChooseBubbleHoming()
             {
                 int choice = Main.rand.Next(2);
                 Projectile.NewProjectile(new Vector2(npc.Center.X + Main.rand.Next(-50, 50), npc.Center.Y + Main.rand.Next(-50, 50)),
                     new Vector2(npc.velocity.X + Main.rand.Next(5, 10), npc.velocity.Y + Main.rand.Next(5, 10)),
-                    choice == 0 ? ModContent.ProjectileType<Bubble1>() : ModContent.ProjectileType<Bubble2>(), 20, 2f, Main.myPlayer);
+                    choice == 0 ? ModContent.ProjectileType<BubbleHoming>() : ModContent.ProjectileType<BubbleHoming2>(), 20, 2f, Main.myPlayer);
 
             }
         }

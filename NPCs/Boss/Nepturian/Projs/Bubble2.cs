@@ -20,9 +20,10 @@ namespace SolanumMod.NPCs.Boss.Nepturian.Projs
             projectile.ignoreWater = true;
 
         }
+        int fuckMoon = Main.rand.NextBool() ? -1 : 1;
         public override void AI()
         {
-            Vector2 floatypos = new Vector2((float)Math.Cos(Main.GlobalTime / 1f) * .25f, (float)Math.Sin(Main.GlobalTime / 1.37f) * .25f);
+            Vector2 floatypos = new Vector2((float)Math.Cos(Main.GlobalTime / 1f) * 2, (float)Math.Sin(Main.GlobalTime / 1.37f) * 2) * fuckMoon;
             projectile.velocity = floatypos + new Vector2(0, -1);
         }
         public override void Kill(int timeLeft)
