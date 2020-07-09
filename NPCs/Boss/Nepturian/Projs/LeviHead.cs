@@ -12,11 +12,10 @@ namespace SolanumMod.NPCs.Boss.Nepturian.Projs
         {
             projectile.width = 144;
             projectile.height = 296;
-            projectile.friendly = false;
-            projectile.light = 0.8f;
             projectile.tileCollide = false;
             projectile.hostile = true;
-       		projectile.ignoreWater = true;
+            projectile.magic = true;
+            projectile.ignoreWater = true;
             projectile.damage = 100;
             projectile.timeLeft = 600;
         }
@@ -59,7 +58,7 @@ namespace SolanumMod.NPCs.Boss.Nepturian.Projs
             int choice = Main.rand.Next(2);
             Projectile.NewProjectile(new Vector2(projectile.Center.X + Main.rand.Next(-50, 50), projectile.Center.Y + Main.rand.Next(-50, 50)),
                 new Vector2(projectile.velocity.X + Main.rand.Next(5, 10), projectile.velocity.Y + Main.rand.Next(5, 10)),
-                choice == 0 ? ModContent.ProjectileType<Bubble1>() : ModContent.ProjectileType<Bubble2>(), 0, 0f);
+                choice == 0 ? ModContent.ProjectileType<Bubble1>() : ModContent.ProjectileType<Bubble2>(), 20, 3f, Main.myPlayer);
 
         }
     }

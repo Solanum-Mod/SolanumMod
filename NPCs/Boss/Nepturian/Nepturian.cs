@@ -223,12 +223,22 @@ namespace SolanumMod.NPCs.Boss.Nepturian
 
                     Dust dust3 = Dust.NewDustPerfect(npc.Center + vel * 35, DustID.Vortex, vel * -1, 100, Color.Aqua, 1);
                     dust3.noGravity = true;
+                    if(StateTimer >= 100)
+                    {
+                        BubTimer++;
+                        if(BubTimer == 14)
+                        {
+                            BubTimer = 0;
+                            ChooseBubble();
+                        }
+                    }
                 }
                 else if (StateTimer == 201)
                 {
                     // Shoot thingy
-                    Projectile.NewProjectile(npc.Center, npc.velocity, ModContent.ProjectileType<Projs.LeviHead>(), 200, 2f, Main.myPlayer);
+                    Projectile.NewProjectile(npc.Center, npc.velocity, ModContent.ProjectileType<LeviHead>(), 200, 2f, Main.myPlayer);
                     StateTimer = 0;
+                    BubTimer = 0;
                     State = State_Choosing;
                 }
 
@@ -338,7 +348,7 @@ namespace SolanumMod.NPCs.Boss.Nepturian
             int choice = Main.rand.Next(2);
             Projectile.NewProjectile(new Vector2(npc.Center.X + Main.rand.Next(-50, 50), npc.Center.Y + Main.rand.Next(-50, 50)),
                 new Vector2(npc.velocity.X + Main.rand.Next(5, 10), npc.velocity.Y + Main.rand.Next(5, 10)),
-                choice == 0 ? ModContent.ProjectileType<Bubble1>() : ModContent.ProjectileType<Bubble2>(), 0, 0f);
+                choice == 0 ? ModContent.ProjectileType<Bubble1>() : ModContent.ProjectileType<Bubble2>(), 20, 2f, Main.myPlayer);
 
         }
         // Imagine nested classes, kinda cring if you ask me 
@@ -460,7 +470,17 @@ namespace SolanumMod.NPCs.Boss.Nepturian
                 {
                     // TODO: Shoot projectile lol
                     AttackTimer = 0;
+                    if (Main.rand.NextBool())
+                        ChooseBubble();
                 }
+            }
+            public void ChooseBubble()
+            {
+                int choice = Main.rand.Next(2);
+                Projectile.NewProjectile(new Vector2(npc.Center.X + Main.rand.Next(-50, 50), npc.Center.Y + Main.rand.Next(-50, 50)),
+                    new Vector2(npc.velocity.X + Main.rand.Next(5, 10), npc.velocity.Y + Main.rand.Next(5, 10)),
+                    choice == 0 ? ModContent.ProjectileType<Bubble1>() : ModContent.ProjectileType<Bubble2>(), 20, 2f, Main.myPlayer);
+
             }
         }
     }

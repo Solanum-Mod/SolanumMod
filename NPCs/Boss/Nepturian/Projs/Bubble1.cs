@@ -12,10 +12,10 @@ namespace SolanumMod.NPCs.Boss.Nepturian.Projs
         {
             projectile.width = 34;
             projectile.height = 34;
-            projectile.friendly = false;
-            projectile.hostile = true;
-            projectile.damage = 40;
             projectile.timeLeft = 200;
+            projectile.penetrate = -1;
+            projectile.hostile = true;
+            projectile.magic = true;
             projectile.tileCollide = false;
             projectile.ignoreWater = true;
         }
