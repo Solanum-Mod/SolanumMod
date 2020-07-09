@@ -21,5 +21,23 @@ namespace SolanumMod
 				}
 			}
 		}
+		float OGValue;
+		public override bool InstancePerEntity => true;
+		bool setOGLightValue = false;
+		public override void AI(Projectile projectile)
+		{
+			if(!setOGLightValue)
+			{
+				OGValue = projectile.light;
+				setOGLightValue = true;
+			}
+			if(projectile.owner == Main.myPlayer && projectile.minion)
+			{
+				if(Main.player[projectile.owner].GetModPlayer<SolanumPlayer>().GoldenPendant && projectile.light < 0.5f)
+				{
+						projectile.light = 0.55f;
+				}  else projectile.light = OGValue;
+			} 
+		}
 	}
 }
