@@ -186,6 +186,14 @@ namespace SolanumMod.NPCs.Boss.Nepturian
                     if(BubTimer >= 4)
                     {
                         ChooseBubble();
+                        for (int i = 0; i < 36; i++)
+                        {
+                            float angle = MathHelper.ToRadians(10 * i);
+                            Vector2 vector = new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle));
+                            Dust dust = Dust.NewDustPerfect(npc.Center + (vector * 40), DustID.Vortex, vector * 8f, 100, Color.Aquamarine);
+                            dust.noGravity = true;
+
+                        }
                         BubTimer = 0;
                     }
                 }
@@ -271,7 +279,6 @@ namespace SolanumMod.NPCs.Boss.Nepturian
             // myes switches exist
             npc.spriteDirection = npc.direction;
             npc.frame.Y = frameHeight * FrameThingy;
-            Main.NewText(npc.frameCounter.ToString());
             if(State == State_Clone || State == State_Leviathan)
             {
                 if(StateTimer <= 100)
