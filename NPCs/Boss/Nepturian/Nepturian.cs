@@ -9,14 +9,19 @@ namespace SolanumMod.NPCs.Boss.Nepturian
 {
     public class Nepturian : ModNPC
     {
+        public override void SetStaticDefaults()
+        {
+            Main.npcFrameCount[npc.type] = 12;
+        }
+
         public override void SetDefaults()
         {
             npc.lifeMax = 1000;
             npc.damage = 20;
             npc.defense = 12;
             npc.knockBackResist = 0f;
-            npc.width = 82;
-            npc.height = 134;
+            npc.width = 108;
+            npc.height = 136;
             npc.aiStyle = -1;
             npc.noGravity = true;
             npc.HitSound = SoundID.NPCHit1;
@@ -146,27 +151,23 @@ namespace SolanumMod.NPCs.Boss.Nepturian
             if (State == State_Choosing)
             {
                 StateTimer++;
-                if(StateTimer == 100)
+                if (StateTimer == 130)
                 {
-                    State = State_Clone;
+                    int i = Main.rand.Next(3);
+                    switch (i)
+                    {
+                        case 0:
+                            State = State_Dash;
+                            break;
+                        case 1:
+                            State = State_Leviathan;
+                            break;
+                        case 2:
+                            State = State_Clone;
+                            break;
+                    }
                     StateTimer = 0;
                 }
-                /*int i = Main.rand.Next(4);
-                switch (i)
-                {
-                    case 0:
-                        State = State_Dash;
-                        break;
-                    case 1:
-                        State = State_Leviathan;
-                        break;
-                    case 2:
-                        State = State_Rain;
-                        break;
-                    case 3:
-                        State = State_Stream;
-                        break;*/
-                //}
             }
             else if (State == State_Dash)
             {
@@ -198,7 +199,7 @@ namespace SolanumMod.NPCs.Boss.Nepturian
             else if (State == State_Leviathan)
             {
                 StateTimer++;
-                if (StateTimer <= 100)
+                if (StateTimer <= 200)
                 {
                     npc.velocity = Vector2.Zero;
                     // TODO cool channel animation or something visual.
@@ -215,7 +216,7 @@ namespace SolanumMod.NPCs.Boss.Nepturian
                     Dust dust3 = Dust.NewDustPerfect(npc.Center + vel * 35, DustID.Vortex, vel * -1, 100, Color.Aqua, 1);
                     dust3.noGravity = true;
                 }
-                else if (StateTimer == 101)
+                else if (StateTimer == 201)
                 {
                     // Shoot thingy
                     Projectile.NewProjectile(npc.Center, npc.velocity, ModContent.ProjectileType<Projs.LeviHead>(), 200, 2f, Main.myPlayer);
@@ -261,6 +262,65 @@ namespace SolanumMod.NPCs.Boss.Nepturian
                     NPC.NewNPC((int)npc.Center.X, (int)npc.Center.Y, ModContent.NPCType<NepturianClone>());
                     State = State_Choosing;
                     StateTimer = 0;
+                }
+            }
+        }
+        private int FrameThingy = 1;
+        public override void FindFrame(int frameHeight)
+        {
+            // myes switches exist
+            npc.spriteDirection = npc.direction;
+            npc.frame.Y = frameHeight * FrameThingy;
+            Main.NewText(npc.frameCounter.ToString());
+            if(State == State_Clone || State == State_Leviathan)
+            {
+                if(StateTimer <= 100)
+                {
+                    npc.frameCounter++;
+                    if (FrameThingy < 8)
+                    {
+                        if (npc.frameCounter == 10)
+                        {
+                            FrameThingy++;
+                            npc.frameCounter = 0;
+                        }
+                    }
+                    else { FrameThingy = 8; npc.frameCounter = 0; }
+                }
+                else if(StateTimer > 100 && StateTimer <= 200)
+                {
+                    if (FrameThingy < 11)
+                    {
+                        npc.frameCounter++;
+                        if (npc.frameCounter == 10)
+                        {
+                            FrameThingy++;
+                            npc.frameCounter = 0;
+                        }
+                    }
+                    else { FrameThingy = 11; npc.frameCounter = 0; }
+                }
+                else if(StateTimer == 201)
+                {
+                    npc.frameCounter = 0;
+                    FrameThingy = 1;
+                }
+            }
+            else if(State == State_Rain)
+            {
+
+            }
+            else
+            {
+                npc.frameCounter++;
+                if (npc.frameCounter == 10)
+                {
+                    FrameThingy++;
+                    npc.frameCounter = 0;
+                }
+                if (FrameThingy >= 4)
+                {
+                    FrameThingy = 1;
                 }
             }
         }
