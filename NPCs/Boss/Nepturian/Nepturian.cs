@@ -611,9 +611,10 @@ namespace SolanumMod.NPCs.Boss.Nepturian
                 Move(player, 0.05f);
 
                 AttackTimer++;
-                if(AttackTimer == 120)
+                if(AttackTimer == 250)
                 {
                     // TODO: Shoot projectile lol
+                    Projectile.NewProjectile(npc.Center, npc.velocity, ModContent.ProjectileType<LargeWaterP>(), 30, 2f, Main.myPlayer);
                     AttackTimer = 0;
                     if (Main.rand.NextBool())
                         ChooseBubbleHoming();
