@@ -21,8 +21,8 @@ namespace SolanumMod.NPCs.Boss.Nepturian
 
         public override void SetDefaults()
         {
-            npc.lifeMax = 1000;
-            npc.damage = 20;
+            npc.lifeMax = 30000;
+            npc.damage = 65;
             npc.defense = 12;
             npc.knockBackResist = 0f;
             npc.width = 108;
@@ -508,7 +508,7 @@ namespace SolanumMod.NPCs.Boss.Nepturian
         {
             public override void SetDefaults()
             {
-                npc.lifeMax = 200;
+                npc.lifeMax = 1200;
                 npc.damage = 20;
                 npc.defense = 12;
                 npc.knockBackResist = 0f;
