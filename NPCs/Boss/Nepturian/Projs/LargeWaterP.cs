@@ -15,7 +15,7 @@ namespace SolanumMod.NPCs.Boss.Nepturian.Projs
         }
         public override void SetDefaults()
         {
-            projectile.timeLeft = 2000;
+            projectile.timeLeft = 750;
             projectile.penetrate = -1;
             projectile.hostile = true;
             projectile.magic = true;
