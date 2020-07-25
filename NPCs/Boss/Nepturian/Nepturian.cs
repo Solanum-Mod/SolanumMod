@@ -38,6 +38,13 @@ namespace SolanumMod.NPCs.Boss.Nepturian
             npc.noTileCollide = true;
 
         }
+        public override void NPCLoot()
+        {
+            if(Main.rand.Next(3) == 2)
+                Item.NewItem(npc.Center,npc.getRect().Size(),ModContent.ItemType<Items.Weapons.BarnacleBow>());
+            if(Main.rand.Next(2) == 0)
+                Item.NewItem(npc.Center,npc.getRect().Size(),ModContent.ItemType<Items.Weapons.SeaSplitter>());
+        }
 
         // Variables and shit
         private const int State_Stream = 0;
