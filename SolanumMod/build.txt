@@ -1,3 +1,0 @@
-displayName = Solanum Mod
-author = Potat
-version = 0.1
